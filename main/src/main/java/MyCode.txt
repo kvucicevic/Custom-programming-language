@@ -1,0 +1,4 @@
+Function main with no arguments and return type number:
+    Declare number a .
+    The number a takes value of 5 .
+    Write a .
