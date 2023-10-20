@@ -9,7 +9,9 @@ public class AssignLine extends CodeLine{
     @Override
     protected String makeJavaLine(String text) {
         String[] words = text.split(" ");
-        String varName = "a";
+        for(String word : words)
+            System.out.println(word + " " + words.length);
+        String varName = words[words.length-6];
         String value = words[words.length-2];
         return "\t\t" + varName + " = " + value + ";" + "\n";
     }

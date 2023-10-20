@@ -17,7 +17,7 @@ public class FileScan {
             String line;
             String[] lines = new String[100];
             int i = 0;
-            while((line = br.readLine()) != null){
+            while((line = br.readLine()) != null){ /// LEVEL!! TO DETERMINE THE NUMBER OF TABS
                 CodeLine currentLine = LineFactory.getInstance().generateLine(line);
                 lines[i++] = currentLine.getJavaText();
                 System.out.println(lines[i]);
