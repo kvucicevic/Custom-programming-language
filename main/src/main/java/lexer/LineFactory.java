@@ -4,44 +4,41 @@ import lexer.line.*;
 
 public class LineFactory {
 
-    private String inputLine;
-
     public static LineFactory instance = null;
 
-    private LineFactory(String inputLine) {
-        this.inputLine = inputLine;
-        determineLine();
+    private LineFactory() {
+
     }
 
     public static LineFactory getInstance() {
         if(instance == null)
-            instance = new LineFactory(instance.inputLine);
+            instance = new LineFactory();
         return instance;
     }
 
-    private Line determineLine(){
-        if(this.inputLine.contains("Declare")){
-            return new Declaration(this.inputLine);
-        } else if(this.inputLine.contains("The")){
-            return new Assignment(this.inputLine);
-        } else if(this.inputLine.contains("For")){
-            return new For(this.inputLine);
-        } else if(this.inputLine.contains("While")){
-            return new While(this.inputLine);
-        } else if(this.inputLine.contains("If")){
-            return new If(this.inputLine);
-        } else if(this.inputLine.contains("Else")){
-            return new Else(this.inputLine);
-        } else if(this.inputLine.contains("Function")){
-            return new Function(this.inputLine);
-        } else if(this.inputLine.contains("Return")){
-            return new Return(this.inputLine);
-        } else if(this.inputLine.contains("End of")){
-            return new EndOf(this.inputLine);
-        } else if(this.inputLine.contains("Load")){
-            return new Load(this.inputLine);
-        } else if(this.inputLine.contains("Write")){
-            return new Write(this.inputLine);
+    public Line determineLine(String inputLine){
+        if(inputLine.contains("Declare")){
+            return new Declaration(inputLine);
+        } else if(inputLine.contains("The")){
+            return new Assignment(inputLine);
+        } else if(inputLine.contains("For")){
+            return new For(inputLine);
+        } else if(inputLine.contains("While")){
+            return new While(inputLine);
+        } else if(inputLine.contains("If")){
+            return new If(inputLine);
+        } else if(inputLine.contains("Else")){
+            return new Else(inputLine);
+        } else if(inputLine.contains("Function")){
+            return new Function(inputLine);
+        } else if(inputLine.contains("Return")){
+            return new Return(inputLine);
+        } else if(inputLine.contains("End of")){
+            return new EndOf(inputLine);
+        } else if(inputLine.contains("Load")){
+            return new Load(inputLine);
+        } else if(inputLine.contains("Write")){
+            return new Write(inputLine);
         }
         return null;
     }

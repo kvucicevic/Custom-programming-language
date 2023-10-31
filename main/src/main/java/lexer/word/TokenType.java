@@ -1,5 +1,5 @@
 package lexer.word;
 
 public enum TokenType {
-    DataType, VarName, Branch, Loop, Punctuation, Function, Return, End,
+    DataType, VarName, VarValue, Punctuation, Return, End, Logic, Arithmetics, Relation, Boolean, Argument, FunctionName
 }
