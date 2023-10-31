@@ -17,12 +17,12 @@ public class Declaration extends Line {
 
     public Declaration(String inputLine) {
         super(inputLine);
-        this.map = new HashMap<>();
     }
 
     @Override
     public void analyzeLine(String inputLine) {
 
+        this.map = new HashMap<>();
         String[] words = inputLine.split(" ");
 
         this.map.put(words[1], TokenType.DataType);
@@ -30,6 +30,14 @@ public class Declaration extends Line {
         this.map.put(words[3], TokenType.Punctuation);
     }
 
+    @Override
+    public String toString() {
+        String res = "";
+        for(String str : map.keySet()){
+            res = res.concat("KeyWord: " + "\"" + str + "\"" + " is of type: " + map.get(str) + "\n");
+        }
+        return res;
+    }
     public LineType getType() {
         return type;
     }

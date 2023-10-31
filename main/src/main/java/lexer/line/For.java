@@ -20,12 +20,12 @@ public class For extends Line {
 
     public For(String inputLine) {
         super(inputLine);
-        this.map = new HashMap<>();
     }
 
     @Override
     public void analyzeLine(String inputLine) {
 
+        this.map = new HashMap<>();
         String[] words = inputLine.split(" ");
 
         this.map.put(words[3], TokenType.DataType);
@@ -33,7 +33,6 @@ public class For extends Line {
 
         this.map.put(words[6], TokenType.VarValue);
         this.map.put(words[8], TokenType.VarValue);
-
 
     }
 

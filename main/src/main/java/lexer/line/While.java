@@ -18,12 +18,12 @@ public class While extends Line {
 
     public While(String inputLine) {
         super(inputLine);
-        this.map = new HashMap<>();
     }
 
     @Override
     public void analyzeLine(String inputLine) {
 
+        this.map = new HashMap<>();
         String[] words = inputLine.split(" ");
 
         if(inputLine.contains("that")){

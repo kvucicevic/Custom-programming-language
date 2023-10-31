@@ -18,13 +18,14 @@ public class Write extends Line {
 
     public Write(String inputLine) {
         super(inputLine);
-        this.map = new HashMap<>();
     }
 
     @Override
     public void analyzeLine(String inputLine) {
 
+        this.map = new HashMap<>();
         String[] words = inputLine.split(" ");
+
 
         if(inputLine.contains("\"")){
             this.map.put(words[1], TokenType.VarValue);
@@ -38,6 +39,15 @@ public class Write extends Line {
             }
             this.map.put(words[6], TokenType.Punctuation);
         }
+    }
+
+    @Override
+    public String toString() {
+        String res = "";
+        for(String str : map.keySet()){
+            res = res.concat("KeyWord: " + "\"" + str + "\"" + " is of type: " + map.get(str) + "\n");
+        }
+        return res;
     }
 
     public LineType getType() {

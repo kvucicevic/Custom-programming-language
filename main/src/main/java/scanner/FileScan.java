@@ -1,5 +1,8 @@
 package scanner;
 
+import lexer.LineFactory;
+import lexer.line.Line;
+
 import java.io.*;
 
 public class FileScan {
@@ -13,10 +16,12 @@ public class FileScan {
             br = new BufferedReader(fr);
 
             String line;
-            String[] lines = new String[100];
-            int i = 0;
             while((line = br.readLine()) != null){ /// LEVEL!! TO DETERMINE THE NUMBER OF TABS
-                // analiza
+                if(line.isEmpty())
+                    continue;
+                System.out.println("Current line is: " + line);
+                Line specLine = LineFactory.getInstance().determineLine(line);
+                System.out.println(specLine);
             }
 
 

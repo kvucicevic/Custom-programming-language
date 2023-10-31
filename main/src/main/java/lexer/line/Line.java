@@ -15,6 +15,7 @@ public abstract class Line {
     public Line(String inputLine) {
         this.inputLine = inputLine;
         this.map = new HashMap<>();
+        analyzeLine(inputLine);
     }
 
     public abstract void analyzeLine(String inputLine);  // popunjava mapu

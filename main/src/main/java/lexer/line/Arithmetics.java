@@ -16,12 +16,12 @@ public class Arithmetics extends Line {
 
     public Arithmetics(String inputLine) {
         super(inputLine);
-        this.map = new HashMap<>();
     }
 
     @Override
     public void analyzeLine(String inputLine) {
 
+        this.map = new HashMap<>();
         String[] words = inputLine.split(" ");
 
         this.map.put(words[0], TokenType.Arithmetics);
@@ -30,7 +30,6 @@ public class Arithmetics extends Line {
         this.map.put(words[10], TokenType.DataType);
         this.map.put(words[11], TokenType.VarName);
         this.map.put(words[12], TokenType.Punctuation);
-
     }
 
     public LineType getType() {
