@@ -1,6 +1,12 @@
 package lexer;
 
 import lexer.line.*;
+import lexer.line.conditionals.Else;
+import lexer.line.conditionals.If;
+import lexer.line.functions.Function;
+import lexer.line.loops.For;
+import lexer.line.loops.While;
+import lexer.line.primeLines.*;
 
 public class LineFactory {
 

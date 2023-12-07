@@ -12,6 +12,10 @@ public abstract class Line {
     private String inputLine;
     private Map<String, TokenType> map;
 
+    private String[] words;
+
+    private String missingWords;
+
     public Line(String inputLine) {
         this.inputLine = inputLine;
         this.map = new HashMap<>();
@@ -19,6 +23,11 @@ public abstract class Line {
     }
 
     public abstract void analyzeLine(String inputLine);  // popunjava mapu
+
+    public abstract boolean syntaxChecker();
+    public abstract boolean incorrectWord();
+    public abstract boolean wordMissing();
+    public abstract boolean invalidWordOrder();
 
     @Override
     public String toString() {

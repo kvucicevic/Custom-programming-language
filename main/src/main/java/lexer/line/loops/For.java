@@ -1,5 +1,7 @@
-package lexer.line;
+package lexer.line.loops;
 
+import lexer.line.Line;
+import lexer.line.LineType;
 import lexer.word.TokenType;
 
 import java.util.HashMap;

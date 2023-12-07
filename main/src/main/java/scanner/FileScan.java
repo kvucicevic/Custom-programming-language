@@ -24,7 +24,6 @@ public class FileScan {
                 System.out.println(specLine);
             }
 
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

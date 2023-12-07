@@ -1,5 +1,7 @@
-package lexer.line;
+package lexer.line.conditionals;
 
+import lexer.line.Line;
+import lexer.line.LineType;
 import lexer.word.TokenType;
 
 import java.util.HashMap;
@@ -8,9 +10,9 @@ import java.util.Map;
 public class If extends Line {
 
     /**
-     * If it is true that a is higher then b, then :
+     * If it is true that a is higher than b, then :
      * If it is true that "num" is lower than 0 , then :
-     * If it is true that "startIdx" is higher than arr (of i), then:   KASNIJE!!!
+     * If it is true that "startIdx" is higher than arr (of i), then:   KASNIJE!!! UZETI U OBZIR LOGICKE OPERATORE
      */
 
     private final LineType type = LineType.If;
