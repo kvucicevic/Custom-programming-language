@@ -20,15 +20,18 @@ public class Declaration extends Line {
     private Map<String, TokenType> map;
     private String[] words;
     private String missing = "";
+    private String inputLine;
 
     public Declaration(String inputLine) {
         super(inputLine);
-        words = inputLine.split(" ");
     }
 
     @Override
     public void analyzeLine(String inputLine) {
         this.map = new HashMap<>();
+        this.inputLine = inputLine;
+        this.missing = "";
+        this.words = inputLine.split(" ");
 
         if(!syntaxChecker()) // neka rec je izostavljena
             return;
@@ -43,14 +46,17 @@ public class Declaration extends Line {
     public boolean syntaxChecker() {
         if(wordMissing()){
             ErrorHandler.getInstance().printError(ErrorType.WordMissing, null);
+            setOptionFlag(-1);
             return false;
         }
         if(incorrectWord()) {
-            ErrorHandler.getInstance().printError(ErrorType.WordMissing, missing);
+            ErrorHandler.getInstance().printError(ErrorType.IncorrectWord, missing);
+            setOptionFlag(-1);
             return false; // postoji greska
         }
-        if(invalidWordOrder()) {
+        if(!invalidWordOrder()) {
             ErrorHandler.getInstance().printError(ErrorType.WrongWordOrder, null);
+            setOptionFlag(-1);
             return false;
         }
 
@@ -63,7 +69,7 @@ public class Declaration extends Line {
             missing = missing.concat(words[0]);
             return true;
         }
-        if (!words[1].equals("numbers") && !words[1].equals("letters") && !words[1].equals("words")) {
+        if (!words[1].equals("number") && !words[1].equals("letter") && !words[1].equals("word")) {
             missing = missing.concat(words[1]);
             return true;
         }
@@ -80,9 +86,7 @@ public class Declaration extends Line {
 
     @Override
     public boolean wordMissing() {
-        if(words.length < 4)
-            return true;
-        return false;
+        return words.length < 4;
     }
 
     @Override
@@ -93,11 +97,13 @@ public class Declaration extends Line {
     }
 
     public boolean lineContains(String word){
+        return inputLine.contains(word);
+        /*
         for(String str : words){
             if(str.equals(word))
                 return true;
         }
-        return false;
+         */
     }
 
     @Override
@@ -108,7 +114,9 @@ public class Declaration extends Line {
         }
         return res;
     }
+
     public LineType getType() {
         return type;
     }
+
 }

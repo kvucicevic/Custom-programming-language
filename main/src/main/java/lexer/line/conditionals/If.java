@@ -10,9 +10,10 @@ import java.util.Map;
 public class If extends Line {
 
     /**
-     * If it is true that a is higher than b, then :
+     * If it is true that a is higher than b , then :
+     * If it is true that a is higher than b and b is lower than c , then :
      * If it is true that "num" is lower than 0 , then :
-     * If it is true that "startIdx" is higher than arr (of i), then:   KASNIJE!!! UZETI U OBZIR LOGICKE OPERATORE
+     * If it is true that "startIdx" is higher than arr (of i), then:  todo KASNIJE!!! UZETI U OBZIR LOGICKE OPERATORE
      */
 
     private final LineType type = LineType.If;
@@ -36,5 +37,25 @@ public class If extends Line {
         }
 
         this.map.put(words[7], TokenType.Relation);
+    }
+
+    @Override
+    public boolean syntaxChecker() {
+        return false;
+    }
+
+    @Override
+    public boolean incorrectWord() {
+        return false;
+    }
+
+    @Override
+    public boolean wordMissing() {
+        return false;
+    }
+
+    @Override
+    public boolean invalidWordOrder() {
+        return false;
     }
 }

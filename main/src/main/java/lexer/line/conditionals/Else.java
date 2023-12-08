@@ -43,6 +43,26 @@ public class Else extends Line {
 
     }
 
+    @Override
+    public boolean syntaxChecker() {
+        return false;
+    }
+
+    @Override
+    public boolean incorrectWord() {
+        return false;
+    }
+
+    @Override
+    public boolean wordMissing() {
+        return false;
+    }
+
+    @Override
+    public boolean invalidWordOrder() {
+        return false;
+    }
+
     public LineType getType() {
         return type;
     }

@@ -2,4 +2,7 @@ Function main with no arguments and return type number :
 
 Declare number a .
 The number a takes value of 5 .
+Declare number b .
+Load number b .
+Add ( a to b ) then put it in number a .
 Write the number content of a .

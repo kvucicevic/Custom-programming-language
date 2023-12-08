@@ -19,25 +19,26 @@ public class Write extends Line {
     private final LineType type = LineType.ConsoleWrite;
     private Map<String, TokenType> map;
     private String[] words;
-    private String missing = "";
-    private int optionFlag = 0;
+    private String missing;
+    private String inputLine;
 
     public Write(String inputLine) {
         super(inputLine);
-        words = inputLine.split(" ");
     }
 
     @Override
     public void analyzeLine(String inputLine) {
         this.map = new HashMap<>();
-
+        this.inputLine = inputLine;
+        this.missing = "";
+        this.words = inputLine.split(" ");
         setOption(inputLine);
 
         if(!syntaxChecker()) // neka rec je izostavljena
             return;
 
         this.map.put(words[0], TokenType.KeyWord);
-        if(optionFlag == 1){
+        if(getOptionFlag() == 1){
             this.map.put(words[1], TokenType.VarValue);
             this.map.put(words[2], TokenType.Punctuation);
         } else {
@@ -49,9 +50,9 @@ public class Write extends Line {
 
     public void setOption(String inputLine) {
         if(inputLine.contains("\"")){
-            optionFlag = 1;
+            setOptionFlag(1);
         } else {
-            optionFlag = 2;
+            setOptionFlag(2);
         }
     }
 
@@ -59,14 +60,17 @@ public class Write extends Line {
     public boolean syntaxChecker() {
         if(wordMissing()){
             ErrorHandler.getInstance().printError(ErrorType.WordMissing, null);
+            setOptionFlag(-1);
             return false;
         }
         if(incorrectWord()) {
-            ErrorHandler.getInstance().printError(ErrorType.WordMissing, missing);
+            ErrorHandler.getInstance().printError(ErrorType.IncorrectWord, missing);
+            setOptionFlag(-1);
             return false; // postoji greska
         }
-        if(invalidWordOrder()) {
+        if(!invalidWordOrder()) {
             ErrorHandler.getInstance().printError(ErrorType.WrongWordOrder, null);
+            setOptionFlag(-1);
             return false;
         }
 
@@ -80,7 +84,7 @@ public class Write extends Line {
             return true;
         }
 
-        if(optionFlag == 2) {
+        if(getOptionFlag() == 2) {
             if (!words[1].equals("the")) {
                 missing = missing.concat(words[1]);
                 return true;
@@ -111,12 +115,12 @@ public class Write extends Line {
 
     @Override
     public boolean wordMissing() {
-        if(optionFlag == 2) {
+        if(getOptionFlag() == 2) {
             if (words.length < 7) {
                 return true;
             }
         }
-        if(optionFlag == 1){
+        if(getOptionFlag() == 1){
             return words.length < 3;
         }
         return false;
@@ -124,7 +128,7 @@ public class Write extends Line {
 
     @Override
     public boolean invalidWordOrder() {
-        if(optionFlag == 2){ // 2. option
+        if(getOptionFlag() == 2){ // 2. option
             return lineContains("Write the") && (lineContains("number")
                     || lineContains("letter") || lineContains("word"))
                     && lineContains("content of") && lineContains(".");
@@ -134,11 +138,13 @@ public class Write extends Line {
     }
 
     public boolean lineContains(String word){
+        return inputLine.contains(word);
+        /*
         for(String str : words){
             if(str.equals(word))
                 return true;
         }
-        return false;
+         */
     }
 
     @Override

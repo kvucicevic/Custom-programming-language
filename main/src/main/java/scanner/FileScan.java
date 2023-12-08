@@ -21,6 +21,10 @@ public class FileScan {
                     continue;
                 System.out.println("Current line is: " + line);
                 Line specLine = LineFactory.getInstance().determineLine(line);
+                if(specLine.getOptionFlag() == -1) {
+                    System.out.println("Error");
+                    return;
+                }
                 System.out.println(specLine);
             }
 

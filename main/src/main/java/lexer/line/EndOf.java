@@ -18,16 +18,22 @@ public class EndOf extends Line {
     private final LineType type = LineType.EndOf;
     private Map<String, TokenType> map;
     private String[] words;
-    private String missing = "";
+    private String missing;
+    private String inputLine;
 
     public EndOf(String inputLine) {
         super(inputLine);
-        words = inputLine.split(" ");
     }
 
     @Override
     public void analyzeLine(String inputLine) {
         this.map = new HashMap<>();
+        this.missing = "";
+        this.inputLine = inputLine;
+        this.words = inputLine.split(" ");
+
+        if(!syntaxChecker()) // neka rec je izostavljena
+            return;
 
         this.map.put(words[0], TokenType.End);
         this.map.put(words[3], TokenType.Punctuation);
@@ -37,14 +43,17 @@ public class EndOf extends Line {
     public boolean syntaxChecker() {
         if(wordMissing()){
             ErrorHandler.getInstance().printError(ErrorType.WordMissing, null);
+            setOptionFlag(-1);
             return false;
         }
         if(incorrectWord()) {
-            ErrorHandler.getInstance().printError(ErrorType.WordMissing, missing);
+            ErrorHandler.getInstance().printError(ErrorType.IncorrectWord, missing);
+            setOptionFlag(-1);
             return false; // postoji greska
         }
-        if(invalidWordOrder()) {
+        if(!invalidWordOrder()) {
             ErrorHandler.getInstance().printError(ErrorType.WrongWordOrder, null);
+            setOptionFlag(-1);
             return false;
         }
         return true;
@@ -79,11 +88,13 @@ public class EndOf extends Line {
     }
 
     public boolean lineContains(String word){
+        return inputLine.contains(word);
+        /*
         for(String str : words){
             if(str.equals(word))
                 return true;
         }
-        return false;
+         */
     }
 
     public LineType getType() {

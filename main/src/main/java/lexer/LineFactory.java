@@ -25,7 +25,7 @@ public class LineFactory {
     public Line determineLine(String inputLine){
         if(inputLine.contains("Declare")){
             return new Declaration(inputLine);
-        } else if(inputLine.contains("The")){
+        } else if(inputLine.contains("takes")){
             return new Assignment(inputLine);
         } else if(inputLine.contains("For")){
             return new For(inputLine);
@@ -45,6 +45,8 @@ public class LineFactory {
             return new Load(inputLine);
         } else if(inputLine.contains("Write")){
             return new Write(inputLine);
+        } else if (inputLine.contains("Add")){
+            return new Arithmetics(inputLine);
         }
         return null;
     }

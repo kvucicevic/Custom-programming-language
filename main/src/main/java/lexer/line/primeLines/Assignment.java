@@ -20,20 +20,25 @@ public class Assignment extends Line {
     private final LineType type = LineType.Assignment;
     private Map<String, TokenType> map;
     private String[] words;
-    private String missing = "";
-    private int optionFlag = 0;
+    private String missing;
+    private String inputLine;
 
     public Assignment(String inputLine) {
         super(inputLine);
-        words = inputLine.split(" ");
     }
 
     @Override
     public void analyzeLine(String inputLine) {
         this.map = new HashMap<>();
+        this.inputLine = inputLine;
+        this.missing = "";
+        this.words = inputLine.split(" ");
         setOption(inputLine);
 
-        if(optionFlag == 1) {
+        if(!syntaxChecker()) // neka rec je izostavljena
+            return;
+
+        if(getOptionFlag() == 1) {
             this.map.put(words[1], TokenType.DataType);
             this.map.put(words[2], TokenType.VarName);
             this.map.put(words[6], TokenType.FunctionName);
@@ -49,9 +54,9 @@ public class Assignment extends Line {
 
     public void setOption(String inputLine) {
         if(inputLine.contains("(")){
-            optionFlag = 1;
+            setOptionFlag(1);
         } else {
-            optionFlag = 2;
+            setOptionFlag(2);
         }
     }
 
@@ -59,14 +64,17 @@ public class Assignment extends Line {
     public boolean syntaxChecker() {
         if(wordMissing()){
             ErrorHandler.getInstance().printError(ErrorType.WordMissing, null);
+            setOptionFlag(-1);
             return false;
         }
         if(incorrectWord()) {
-            ErrorHandler.getInstance().printError(ErrorType.WordMissing, missing);
+            ErrorHandler.getInstance().printError(ErrorType.IncorrectWord, missing);
+            setOptionFlag(-1);
             return false; // postoji greska
         }
-        if(invalidWordOrder()) {
+        if(!invalidWordOrder()) {
             ErrorHandler.getInstance().printError(ErrorType.WrongWordOrder, null);
+            setOptionFlag(-1);
             return false;
         }
         return true;
@@ -100,7 +108,7 @@ public class Assignment extends Line {
         if(words[6].isEmpty() || words[6].equals(".") || words[6].equals(",")) // var name
             return true;
 
-        if(optionFlag == 1) {
+        if(getOptionFlag() == 1) {
             if (!words[7].equals("(")) {
                 missing = missing.concat(words[7]);
                 return true;
@@ -133,7 +141,7 @@ public class Assignment extends Line {
 
     @Override
     public boolean wordMissing() {
-        if(optionFlag == 1) {
+        if(getOptionFlag() == 1) {
             return words.length < 11;
         } else {
             return words.length < 7;
@@ -142,7 +150,7 @@ public class Assignment extends Line {
 
     @Override
     public boolean invalidWordOrder() {
-        if(optionFlag == 1){
+        if(getOptionFlag() == 1){
             return lineContains("The") && (lineContains("number") || lineContains("letter")
                     || lineContains("word")) && lineContains("takes value of") && lineContains("(")
                     && lineContains(")") && lineContains(".");
@@ -153,11 +161,13 @@ public class Assignment extends Line {
     }
 
     public boolean lineContains(String word){
+        return inputLine.contains(word);
+        /*
         for(String str : words){
             if(str.equals(word))
                 return true;
         }
-        return false;
+         */
     }
 
     @Override

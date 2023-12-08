@@ -66,6 +66,26 @@ public class Function extends Line {
     }
 
     @Override
+    public boolean syntaxChecker() {
+        return false;
+    }
+
+    @Override
+    public boolean incorrectWord() {
+        return false;
+    }
+
+    @Override
+    public boolean wordMissing() {
+        return false;
+    }
+
+    @Override
+    public boolean invalidWordOrder() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         String res = "";
         for(String str : map.keySet()){

@@ -15,15 +15,16 @@ public abstract class Line {
     private String[] words;
 
     private String missingWords;
+    private int optionFlag;
 
     public Line(String inputLine) {
         this.inputLine = inputLine;
         this.map = new HashMap<>();
+        this.optionFlag = 0;
         analyzeLine(inputLine);
     }
 
     public abstract void analyzeLine(String inputLine);  // popunjava mapu
-
     public abstract boolean syntaxChecker();
     public abstract boolean incorrectWord();
     public abstract boolean wordMissing();
@@ -41,5 +42,13 @@ public abstract class Line {
 
     public Map<String, TokenType> getMap() {
         return map;
+    }
+
+    public int getOptionFlag() {
+        return optionFlag;
+    }
+
+    public void setOptionFlag(int optionFlag) {
+        this.optionFlag = optionFlag;
     }
 }
