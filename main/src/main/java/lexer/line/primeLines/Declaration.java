@@ -49,17 +49,16 @@ public class Declaration extends Line {
             setOptionFlag(-1);
             return false;
         }
+        if(!invalidWordOrder() && incorrectWord()) {
+            ErrorHandler.getInstance().printError(ErrorType.WrongWordOrder, null);
+            setOptionFlag(-1);
+            return false;
+        }
         if(incorrectWord()) {
             ErrorHandler.getInstance().printError(ErrorType.IncorrectWord, missing);
             setOptionFlag(-1);
             return false; // postoji greska
         }
-        if(!invalidWordOrder()) {
-            ErrorHandler.getInstance().printError(ErrorType.WrongWordOrder, null);
-            setOptionFlag(-1);
-            return false;
-        }
-
         return true;
     }
 

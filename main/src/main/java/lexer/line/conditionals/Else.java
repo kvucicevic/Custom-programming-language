@@ -1,5 +1,7 @@
 package lexer.line.conditionals;
 
+import lexer.error.ErrorHandler;
+import lexer.error.ErrorType;
 import lexer.line.Line;
 import lexer.line.LineType;
 import lexer.word.TokenType;
@@ -11,11 +13,14 @@ public class Else extends Line {
 
     /**
      *  else , do :
-     *  else if .....
+     *  else if // todo verovatno ce biti zasebna klasa
      */
 
     private final LineType type = LineType.Else;
     private Map<String, TokenType> map;
+    private String[] words;
+    private String missing = "";
+    private String inputLine;
 
     public Else(String inputLine) {
         super(inputLine);
@@ -23,44 +28,79 @@ public class Else extends Line {
 
     @Override
     public void analyzeLine(String inputLine) {
-
         this.map = new HashMap<>();
-        String[] words = inputLine.split(" ");
+        this.inputLine = inputLine;
+        this.missing = "";
+        this.words = inputLine.split(" ");
 
-        if(words.length < 5){
-            this.map.put(words[1], TokenType.Punctuation);
-            this.map.put(words[3], TokenType.Punctuation);
-        } else {
-            this.map.put(words[4], TokenType.Boolean);
-            if(words[6].contains("\"")) {
-                this.map.put(words[6], TokenType.Argument);
-            } else {
-                this.map.put(words[6], TokenType.VarName);
-            }
+        if(!syntaxChecker()) // neka rec je izostavljena
+            return;
 
-            this.map.put(words[8], TokenType.Relation);
-        }
-
+        this.map.put(words[0], TokenType.KeyWord);
+        this.map.put(words[1], TokenType.Punctuation);
+        this.map.put(words[3], TokenType.Punctuation);
     }
 
     @Override
     public boolean syntaxChecker() {
-        return false;
+        if(wordMissing()){
+            ErrorHandler.getInstance().printError(ErrorType.WordMissing, null);
+            setOptionFlag(-1);
+            return false;
+        }
+        if(!invalidWordOrder() && incorrectWord()) {
+            ErrorHandler.getInstance().printError(ErrorType.WrongWordOrder, null);
+            setOptionFlag(-1);
+            return false;
+        }
+        if(incorrectWord()) {
+            ErrorHandler.getInstance().printError(ErrorType.IncorrectWord, missing);
+            setOptionFlag(-1);
+            return false; // postoji greska
+        }
+        setOptionFlag(1);
+        return true;
     }
 
     @Override
     public boolean incorrectWord() {
+        if (!words[0].equals("Else")) {
+            missing = missing.concat(words[0]);
+            return true;
+        }
+        if (!words[1].equals(",")) {
+            missing = missing.concat(words[1]);
+            return true;
+        }
+        if (!words[2].equals("do")) {
+            missing = missing.concat(words[2]);
+            return true;
+        }
+        if (!words[3].equals(":")) {
+            missing = missing.concat(words[3]);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean wordMissing() {
-        return false;
+        return words.length < 3;
     }
 
     @Override
     public boolean invalidWordOrder() {
-        return false;
+        return lineContains("Else , do :");
+    }
+
+    public boolean lineContains(String word){
+        return inputLine.contains(word);
+        /*
+        for(String str : words){
+            if(str.equals(word))
+                return true;
+        }
+         */
     }
 
     public LineType getType() {
