@@ -12,7 +12,6 @@ public class EndOf extends Line {
     /**
      * End of loop .
      * End of function .
-     * TODO - SEE HOW TO HANDLE
      */
 
     private final LineType type = LineType.EndOf;

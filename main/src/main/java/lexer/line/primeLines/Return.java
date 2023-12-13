@@ -15,7 +15,6 @@ public class Return extends Line {
      * Return the number value of min .
      * Return true .
      * Return -1 .
-     * Return the number value of multiply ("num" "num" times) .    todo - nismo hendlali
      */
 
     private final LineType type = LineType.Return;
@@ -135,9 +134,10 @@ public class Return extends Line {
     @Override
     public boolean invalidWordOrder() {
         if(getOptionFlag() == 1){
-            return lineContains("Return the") && (lineContains("number")
-                    || lineContains("letter") || lineContains("word")) && lineContains("of")
-                    && lineContains(".");
+            return lineContains("Return the") && (lineContains("number") || lineContains("letter") ||
+                    lineContains("word")) && lineContains("value of") && lineContains(".");
+        } else if (getOptionFlag() == 2){
+            return lineContains("Return") && (lineContains("true") || lineContains("false")) && lineContains(".");
         } else {
             return lineContains("Return") && lineContains(".");
         }

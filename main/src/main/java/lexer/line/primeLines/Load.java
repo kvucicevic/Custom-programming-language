@@ -73,7 +73,7 @@ public class Load extends Line {
             setOptionFlag(-1);
             return false; // postoji greska
         }
-        if(!invalidWordOrder()) {
+        if(!invalidWordOrder()) { // todo resiti
             ErrorHandler.getInstance().printError(ErrorType.WrongWordOrder, null);
             setOptionFlag(-1);
             return false;
