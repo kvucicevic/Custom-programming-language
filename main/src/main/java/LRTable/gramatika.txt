@@ -1,0 +1,46 @@
+START -> S
+S -> main { SN }
+SN -> SN N .
+SN -> N .
+N -> RETURN
+N -> WRITE
+N -> ASSIGNMENT
+N -> LOAD
+N -> DELARATION
+N -> FOR , do :
+N -> WHILE , do :
+N -> IF , then :
+DATATYPE -> number | letter | bigDecimalNumber | boolean
+RETURN -> the DATATYPE value of variable .
+RETURN -> variable .
+WRITE -> variable .
+WRITE -> the DATATYPE content of variable .
+ASSIGNMENT -> The DATATYPE variable takes value of variable .
+ASSIGNMENT -> The DATATYPE variable takes value of funccall .
+ASSIGNMENT -> ARITHMETICS (variable to variable) then put it in DATATYPE variable .
+ARITHMETICS -> add | subtract | multiply | divide by
+LOAD -> DATATYPE variable .
+DECLARATION -> DATATYPE variable .
+IF -> IF ELIF ELSE
+IF -> IF ELIF
+IF -> IF ELSE
+IF -> IF
+IF -> it is boolean that CONDBLOCK LOGICAL CONDBLOCK , THEN : { IFBLOCK }
+CONDITIONAL -> higher than | lower than | equal to
+CONDBLOCK -> variable is CONDITIONAL variable
+LOGICAL -> and | or
+IFBLOCK -> SN
+ELSE IF -> IF
+ELSE -> , do : { IFBLOCK }
+WHILE -> it is boolean , do : { LOOPBLOCK }
+WHILE -> it is boolean that CONDBLOCK , do : { LOOPBLOCK }
+FOR -> values of counter variable from variable to variable  , do : { LOOPBLOCK }
+FOR -> values of counter variable from variable to variable STEP do : { LOOPBLOCK }
+FOR -> values of counter variable from variable until CONDBLOCK , do : { LOOPBLOCK }
+FOR -> values of counter variable from variable until CONDBLOCK STEP do : { LOOPBLOCK }
+STEP -> , step number ,
+LOOPBLOCK -> SN ENDOF
+ENDOF -> loop | function
+FUNCTION - > funcname with ARGUMENTBLOCK and RETURNBLOCK
+ARGUMENTBLOCK -> no arguments | DATATYPE varibale as agurment | DATATYPE varibale , DATATYPE varibale as arugments
+RETURNBLOCK -> no return value | return type DATATYPE
