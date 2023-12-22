@@ -25,6 +25,15 @@ public class Tuple {
         this.nT = nT;
     }
 
+    @Override
+    public String toString() {
+        return "Tuple{" +
+                "grammarRuleIndex=" + grammarRuleIndex +
+                ", left='" + lhs + '\'' +
+                ", right='" + rhs + '\'' +
+                '}';
+    }
+
     public int getGrammarRuleIndex() {
         return grammarRuleIndex;
     }

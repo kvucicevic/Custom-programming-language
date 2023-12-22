@@ -1,7 +1,6 @@
 package LRTable.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class StateDeterminer {
     private static List<State> states = new ArrayList<>();
@@ -25,7 +24,7 @@ public class StateDeterminer {
     }
 
     public static void generateStateZero(List<Tuple> grammar) {
-        State stateZero = new State(0, 0, null);
+        State stateZero = new State(0, 0, "");
 
         for (Tuple rule : grammar) {
             String[] rhs = rule.getRhs().split(" ");
@@ -41,13 +40,18 @@ public class StateDeterminer {
                 Transition newT = new Transition(t.getGrammarRuleIndex(), t.getLhs(), t.getRhs(), t.getPositionDot() + 1);
                 newState.addTransition(newT);
 
-                String newNextSymbol = (t.getPositionDot() <= t.getRhs().size() - 1) ? t.getRhs().get(newT.getPositionDot()) : null;
+                String newNextSymbol = (t.getPositionDot() < t.getRhs().size() - 1) ? t.getRhs().get(newT.getPositionDot()) : null;
                 addTransitionsTwo(newState, newNextSymbol);
             }
         }
     }
 
     public static void addTransitionsTwo(State newState, String newNextSymbol) {
+        if(newState.getAddedNTPhaseTwo().contains(newNextSymbol)){
+            return;
+        }
+        newState.addAddedNTPhaseTwo(newNextSymbol);
+
         if (newNextSymbol == null || Character.isLowerCase(newNextSymbol.charAt(0))) {
             return;
         }
@@ -67,9 +71,16 @@ public class StateDeterminer {
         }
     }
 
+
+
     public static List<State> generateStates() {
-        for (State state : states) {
+
+        int index = 0;
+        while (index != states.size()) {
+
+            State state = states.get(index);
             if (state.isCopy()) {
+                index += 1;
                 continue;
             }
 
@@ -95,7 +106,14 @@ public class StateDeterminer {
                     states.add(newState);
                 }
             }
+
+            index += 1;
         }
+
+        return states;
+    }
+
+    public static List<State> getStates() {
         return states;
     }
 }

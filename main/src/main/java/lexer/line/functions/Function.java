@@ -94,10 +94,11 @@ public class Function extends Line {
 
     public void setOption(String inputLine) {
         if(inputLine.contains("no arguments")){
-            if(inputLine.contains("value"))
+            if(inputLine.contains("type")) {
                 setOptionFlag(1);
-            else
+            } else {
                 setOptionFlag(2);
+            }
             return;
         }
         if(inputLine.contains("arguments")){

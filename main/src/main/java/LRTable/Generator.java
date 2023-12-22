@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static LRTable.model.StateDeterminer.generateStateZero;
-import static LRTable.model.StateDeterminer.generateStates;
+import static LRTable.model.StateDeterminer.*;
 
 public class Generator {
     public static void main(String[] args) {
@@ -30,7 +29,7 @@ public class Generator {
             generateStateZero(G);
             List<State> states = generateStates();
 
-            // first and follow sets
+            // follow set
             Map<String, Set<String>> followSets = SetDeterminer.generateFollowSets(G, T, nT);
 
             // actions
@@ -38,6 +37,15 @@ public class Generator {
 
             // export table to excel
             TableExporter.exportLRTable(T, nT, states);
+//            for(Tuple t : G){
+//                System.out.println("Terminal:" + t);
+//            }
+//            for(String key : followSets.keySet()){ // dobar
+//                System.out.println("Follow: " + key);
+//            }
+//            for(State s : getStates()){
+//                System.out.println("Stejt: " + s);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,8 +69,6 @@ public class Generator {
 
             String[] rhsSymbols = rhs.split(" ");
             for (String symbol : rhsSymbols) {
-                //if(symbol.isEmpty())
-                //    continue;
                 if (Character.isUpperCase(symbol.charAt(0))) {
                     if (!nT.contains(symbol)) {
                         nT.add(symbol);

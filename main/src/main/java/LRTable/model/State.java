@@ -16,7 +16,8 @@ public class State {
     private boolean isCopy;
     private Integer copiedFromStateNumber;
     private final Map<String, Action> actions;
-    private final List<String> addedNTphaseTwo;
+    // To prevent an infinite loop when generating states
+    private List<String> addedNTPhaseTwo;
 
     public State(int orderNumber, int prevStateOrderNumber, String gotoSymbol) {
         this.orderNumber = orderNumber;
@@ -26,7 +27,7 @@ public class State {
         this.isCopy = false;
         this.copiedFromStateNumber = null;
         this.actions = new HashMap<>();
-        this.addedNTphaseTwo = new ArrayList<>();
+        this.addedNTPhaseTwo = new ArrayList<>();
     }
 
     public void addTransition(Transition transition) {
@@ -111,7 +112,12 @@ public class State {
         return actions;
     }
 
-    public List<String> getAddedNTphaseTwo() {
-        return addedNTphaseTwo;
+    public List<String> getAddedNTPhaseTwo() {
+        return addedNTPhaseTwo;
     }
+
+    public void addAddedNTPhaseTwo(String nt){
+        addedNTPhaseTwo.add(nt);
+    }
+
 }

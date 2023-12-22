@@ -73,7 +73,7 @@ public class TableExporter {
         }
 
         // Save to a file
-        try (FileOutputStream fileOut = new FileOutputStream("LR_Table.xlsx")) {
+        try (FileOutputStream fileOut = new FileOutputStream("LRtable.xlsx")) {
             workbook.write(fileOut);
         } catch (IOException e) {
             e.printStackTrace();
